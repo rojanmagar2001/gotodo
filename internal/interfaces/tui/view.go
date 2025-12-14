@@ -1,16 +1,30 @@
 package tui
 
-import "strings"
+import (
+	"strings"
+)
 
 func (m Model) View() string {
-	var b strings.Builder
-	b.WriteString("Todo TUI (Milestone 0)\n")
-	b.WriteString("----------------------\n\n")
-	b.WriteString("Keys:\n")
-	b.WriteString("  q / ctrl+c  quit\n\n")
-
-	if !m.ready {
-		b.WriteString("(waiting for terminal size...)\n")
+	if m.err != nil {
+		return "Error: " + m.err.Error() + "\n\nPress q to quit.\n"
 	}
+
+	var b strings.Builder
+	b.WriteString("Todo (Milestone 6)\n")
+	b.WriteString("------------------\n\n")
+
+	if len(m.todos) == 0 {
+		b.WriteString("(no todos yet)\n")
+	} else {
+		for _, td := range m.todos {
+			b.WriteString("- ")
+			b.WriteString(td.Title)
+			b.WriteString(" [")
+			b.WriteString(td.Status)
+			b.WriteString("]\n")
+		}
+	}
+
+	b.WriteString("\nq: quit\n")
 	return b.String()
 }
