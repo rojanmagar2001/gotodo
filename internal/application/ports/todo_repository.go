@@ -10,6 +10,7 @@ type TodoRepository interface {
 	Create(ctx context.Context, t todo.Todo) error
 	Update(ctx context.Context, t todo.Todo) error
 	GetByID(ctx context.Context, id todo.TodoID) (todo.Todo, error)
+
 	List(ctx context.Context, spec ListSpec) ([]todo.Todo, error)
 
 	SoftDelete(ctx context.Context, id todo.TodoID) error
